@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension version="3.0" type="plugin" group="content" method="upgrade">
+	<name>PLG_CONTENT_KSEXTRAS</name>
+	<author>Don Cranford</author>
+	<creationDate>October 2014</creationDate>
+	<copyright>(C) 2014 Katalyst Solutions, LLC</copyright>
+	<license>Commercial</license>
+	<authorEmail>dcranford@katalystsolutions.com</authorEmail>
+	<authorUrl>http://www.katalystsolutions.com</authorUrl>
+	<version>0.2.2extras</version>
+	<description>PLG_CONTENT_KSEXTRAS_XML_DESCRIPTION</description>
+	
+	<files>
+		<filename plugin="ksextras">ksextras.php</filename>
+		<folder>language</folder>
+		<folder>sql</folder>
+		<folder>extras</folder>
+	</files>
+	
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	
+	<uninstall>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/update</schemapath>
+		</schemas>
+	</update>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="organization"
+					type="text"
+					label="PLG_CONTENT_KSEXTRAS_PARAM_ORGANIZATION_LABEL"
+					description="PLG_CONTENT_KSEXTRAS_PARAM_ORGANIZATION_DESC"
+				/>
+				<field
+					name="organization_type"
+					label="PLG_CONTENT_KSEXTRAS_PARAM_ORGANIZATION_TYPE_LABEL"
+					description="PLG_CONTENT_KSEXTRAS_PARAM_ORGANIZATION_TYPE_DESC"
+					type="list"
+				>
+					<option value="Organization">PLG_CONTENT_KSEXTRAS_VALUE_ORGANIZATION</option>
+					<option value="AutomotiveBusiness">PLG_CONTENT_KSEXTRAS_VALUE_AUTOMOTIVE_BUSINESS</option>
+					<option value="Corporation">PLG_CONTENT_KSEXTRAS_VALUE_CORPORATION</option>
+					<option value="EducationalOrganization">PLG_CONTENT_KSEXTRAS_VALUE_EDUCATIONAL_ORGANIZATION</option>
+					<option value="GovernmentalOrganization">PLG_CONTENT_KSEXTRAS_VALUE_GOVERNMENTAL_ORGANIZATION</option>
+					<option value="LocalBusiness">PLG_CONTENT_KSEXTRAS_VALUE_LOCAL_BUSINESS</option>
+					<option value="HomeAndConstructionBusiness">PLG_CONTENT_KSEXTRAS_VALUE_HOME_CONSTRUCTION_BUSINESS</option>
+					<option value="NGO">PLG_CONTENT_KSEXTRAS_VALUE_NGO</option>
+					<option value="PerformingGroup">PLG_CONTENT_KSEXTRAS_VALUE_PERFORMING_GROUP</option>
+					<option value="ProfessionalService">PLG_CONTENT_KSEXTRAS_VALUE_PROFESSIONAL_SERVICE</option>
+				</field>
+				<field
+					name="limit_to_category"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="PLG_CONTENT_KSEXTRAS_PARAM_LIMIT_TO_CATEGORY_LABEL"
+					description="PLG_CONTENT_KSEXTRAS_PARAM_LIMIT_TO_CATEGORY_DESC"
+					>
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+				<field
+					name="category"
+					type="category"
+					extension="com_content"
+					label="PLG_CONTENT_KSEXTRAS_PARAM_CATEGORY_LABEL"
+					description="PLG_CONTENT_KSEXTRAS_PARAM_CATEGORY_DESC"
+				/>
+				<field
+					name="include_child_categories"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="1"
+					label="PLG_CONTENT_KSEXTRAS_PARAM_INCLUDE_CHILD_CATEGORIES_LABEL"
+					description="PLG_CONTENT_KSEXTRAS_PARAM_INCLUDE_CHILD_CATEGORIES_DESC"
+					>
+						<option value="1">JYES</option>
+						<option value="0">JNO</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
