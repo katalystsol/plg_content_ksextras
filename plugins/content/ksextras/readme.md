@@ -2,6 +2,8 @@ This plugin is to allow a Joomla site to add additional fields for com_content w
 
 It is designed for Joomla 3.3 but will likely work with earlier versions of Joomla 3.
 
+This plugin is still under development and testing...
+
 ####### To add a field(s)
 1. In ksextras.php, add the field to array in function setKSField()
 2. In extras/testimonial.xml add the field(s)
@@ -9,7 +11,7 @@ It is designed for Joomla 3.3 but will likely work with earlier versions of Joom
 
 
 Sample layout override output for a testimonial:
-
+<code>
 <div itemtype="http://schema.org/Review" itemscope="">
 <div class="schema-review-description" itemprop="description">Review of {organization}</div>
 <div class="schema-item-reviewed" itemtype="http://schema.org/{organization_type}" itemscope="" itemprop="itemReviewed">
@@ -28,3 +30,4 @@ Sample layout override output for a testimonial:
 </span>
 </div>
 </div>
+</code>
