@@ -50,6 +50,7 @@
 					description="PLG_CONTENT_KSEXTRAS_PARAM_ORGANIZATION_TYPE_DESC"
 					type="list"
 				>
+				<!-- add options here using values from schema.org/Organization see specific types -->
 					<option value="Organization">PLG_CONTENT_KSEXTRAS_VALUE_ORGANIZATION</option>
 					<option value="AutomotiveBusiness">PLG_CONTENT_KSEXTRAS_VALUE_AUTOMOTIVE_BUSINESS</option>
 					<option value="Corporation">PLG_CONTENT_KSEXTRAS_VALUE_CORPORATION</option>
@@ -57,6 +58,7 @@
 					<option value="GovernmentalOrganization">PLG_CONTENT_KSEXTRAS_VALUE_GOVERNMENTAL_ORGANIZATION</option>
 					<option value="LocalBusiness">PLG_CONTENT_KSEXTRAS_VALUE_LOCAL_BUSINESS</option>
 					<option value="HomeAndConstructionBusiness">PLG_CONTENT_KSEXTRAS_VALUE_HOME_CONSTRUCTION_BUSINESS</option>
+					<option value="MedicalOrganization">PLG_CONTENT_KSEXTRAS_VALUE_MEDICAL_ORGANIZATION</option>
 					<option value="NGO">PLG_CONTENT_KSEXTRAS_VALUE_NGO</option>
 					<option value="PerformingGroup">PLG_CONTENT_KSEXTRAS_VALUE_PERFORMING_GROUP</option>
 					<option value="ProfessionalService">PLG_CONTENT_KSEXTRAS_VALUE_PROFESSIONAL_SERVICE</option>
