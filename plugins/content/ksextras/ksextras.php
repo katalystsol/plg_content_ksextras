@@ -48,6 +48,8 @@ class plgContentKSExtras extends JPlugin
 		
 		$this->plg_name					= 'ksextras';
 		$this->ksfields					= $this->setKSFields();
+		
+		// Get the plugin parameters
 		$this->organization				= $this->params->get('organization');
 		$this->organization_type		= $this->params->get('organization_type');
 		$this->category					= $this->params->get('category');
@@ -126,8 +128,10 @@ class plgContentKSExtras extends JPlugin
 		{
 			// Load the data from the database
 			$db = JFactory::getDbo();
-
-			$query='SELECT article_id, data FROM #__content_ksextras' .' WHERE article_id = '.(int) $articleId;
+			$query = $db->getQuery(true);
+			$query->select('article_id, data');
+			$query->from('#__content_ksextras');
+			$query->where('article_id = '.$db->Quote($articleId));
 			$db->setQuery($query);
 		
 			$attribs = $db->loadObject();
@@ -237,8 +241,7 @@ class plgContentKSExtras extends JPlugin
 			return true;
 		}
 		
-		// Get the article id or set to 0 if new article
-		// ????????? Should it not have an article id after it has saved??????
+		// Get the article id or set to 0 if new article (it should have an id at this point)
 		$articleId = isset($data->id) ? $data->id : 0;
 
 		// Get the attributes
@@ -268,53 +271,12 @@ class plgContentKSExtras extends JPlugin
 		{
 			$this->insertRecord($ksattribs, $articleId);
 		}
-		
-/*		
-		if ($articleId && isset($article->testimonial) && count($article->testimonial))
-		{
-			try
-			{
-				$db = JFactory::getDbo();
-				
-				$query = $db->getQuery(true);
-				$query->delete('#__content_ksextras');
-				$query->where('article_id = '.$db->Quote($articleId));
-				$query->where('data LIKE '.$db->Quote('testimonial.%'));
-				$db->setQuery($query);
-				if (!$db->query())
-				{
-					throw new Exception($db->getErrorMsg());
-				}
-				
-				$query->clear();
-				$query->insert('#__content_ksextras');
-				$order = 1;/////////// ???????????????????????????????????????????
-				foreach ($article->testimonial as $k => $v)
-				{/////////// ???????????????????????????????????????????
-					$query->values($articleId.', '.$db->Quote('testimonial.'.$k).', '.$db->Quote(json_encode($v)).', '.$order++);
-				}
-				$db->setQuery($query);
-				
-				if (!$db->query)
-				{
-					throw new Exception($db->getErrorMsg());
-				}
-			}
-			catch (JException $e)
-			{
-				$this->_subject->setError($e->getMessage());
-				return false;
-			}
-		}
-		
-		return true;
-*/
 	}
 	
 	/**
 	* Remove the data when the article is deleted
 	*
-	* Method is called before article data is deleted from the database
+	* Method is called before (after?) article data is deleted from the database
 	*
 	* @param string The context for the content passed to the plugin.
 	* @param object The data relating to the content that was deleted.
@@ -333,7 +295,7 @@ class plgContentKSExtras extends JPlugin
 			{
 				$db = JFactory::getDbo();
 				
-				$db->setQuery('DELETE FROM #__content_kstestominials WHERE article_id = '.$articleId );
+				$db->setQuery('DELETE FROM #__content_ksextras WHERE article_id = '.$articleId );
 				
 				if (!$db->execute()) {
 					throw new Exception($db->getErrorMsg());
@@ -348,67 +310,51 @@ class plgContentKSExtras extends JPlugin
 		}
 
 		return true;
-/*		
-		$articleId = $article->id;
-		if ($articleId)
-		{
-			try
-			{
-				$db = JFactory::getDbo();
-				
-				$query = $db->getQuery(true);
-				$query->delete();
-				$query->from('#__content_ksextras');
-				$query->where('article_id = '.$db->Quote($articleId));
-				$query->where('data LIKE '.$db->Quote('testimonial.%'));
-				$db->setQuery($query);
-				
-				if (!$db->query())
-				{
-					throw new Exception ($db->getErrorMsg());
-				}
-			}
-			catch (JException $e)
-			{
-				$this->_subject->setError($e->getMessage());
-				return false;
-			}
-		}
-		
-		return true;
-*/
 	}
 	
+	/**
+	 * Prepare the content for output
+	 *
+	 * @param $context
+	 * @param $article
+	 * @param $params
+	 * @param $page
+	 *
+	 * @return string
+	 */
 	public function onContentPrepare($context, &$article, &$params, $page = 0)
 	{
 		if (!isset($article->testimonial) || !count($article->testimonial))
-		         return;
+		{
+			return;
+		}
 
-		      // add extra css for table
-		      $doc = JFactory::getDocument();
-//		      $doc->addStyleSheet(JURI::base(true).'/plugins/content/ksextras/extras/extras.css');
+		// add extra css for table
+		$doc = JFactory::getDocument();
+		//$doc->addStyleSheet(JURI::base(true).'/plugins/content/ksextras/extras/ksextras.css');
 
-		      // construct a result table on the fly   
-		      jimport('joomla.html.grid');
-		      $table = new JGrid();
+		// construct a result table on the fly   
+		jimport('joomla.html.grid');
+		$table = new JGrid();
 
-		      // Create columns
-		      $table->addColumn('attr')->addColumn('value');   
+		// Create columns
+		$table->addColumn('attr')->addColumn('value');   
 
-		      // populate
-		      $rownr = 0;
-		      foreach ($article->testimonial as $attr => $value) {
-		         $table->addRow(array('class' => 'row'.($rownr % 2)));
-		         $table->setRowCell('attr', $attr);
-		         $table->setRowCell('value', $value);
-		         $rownr++;
-		      }
+		// populate
+		$rownr = 0;
+		foreach ($article->testimonial as $attr => $value)
+		{
+			$table->addRow(array('class' => 'row'.($rownr % 2)));
+			$table->setRowCell('attr', $attr);
+			$table->setRowCell('value', $value);
+			$rownr++;
+		}
 
-		      // wrap table in a classed <div>
-		      $suffix = $this->params->get('testimonialclass_sfx', 'testimonial');
-		      $html = '<div class="'.$suffix.'">'.(string)$table.'</div>';
+		// wrap table in a classed <div>
+		$suffix = $this->params->get('testimonialclass_sfx', 'testimonial');
+		$html = '<div class="'.$suffix.'">'.(string)$table.'</div>';
 
-		      $article->text = $html.$article->text;
+		$article->text = $html.$article->text;
 	}
 
 	 /**
