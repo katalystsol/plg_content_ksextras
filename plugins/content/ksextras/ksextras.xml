@@ -2,12 +2,12 @@
 <extension version="3.0" type="plugin" group="content" method="upgrade">
 	<name>PLG_CONTENT_KSEXTRAS</name>
 	<author>Don Cranford</author>
-	<creationDate>October 2014</creationDate>
-	<copyright>(C) 2014 Katalyst Solutions, LLC</copyright>
+	<creationDate>November 2014</creationDate>
+	<copyright>Copyright (C) 2014 Katalyst Solutions, LLC</copyright>
 	<license>GNU General Public License version 2 or later</license>
 	<authorEmail>dcranford@katalystsolutions.com</authorEmail>
 	<authorUrl>http://www.katalystsolutions.com</authorUrl>
-	<version>0.2.2extras</version>
+	<version>1.0</version>
 	<description>PLG_CONTENT_KSEXTRAS_XML_DESCRIPTION</description>
 	
 	<files>

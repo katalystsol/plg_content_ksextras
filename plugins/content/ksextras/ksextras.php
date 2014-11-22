@@ -124,6 +124,8 @@ class plgContentKSExtras extends JPlugin
 		// Load the data from table into the form
 		$articleId = isset($data->id) ? $data->id : 0;
 		
+		// If there is already an $articleId, then the article is in edit mode 
+		// and we need to retrieve the data from the database
 		if ($articleId)
 		{
 			// Load the data from the database
@@ -163,13 +165,13 @@ class plgContentKSExtras extends JPlugin
 	}
 	
 	/**
-	 * Runs on content preparation
+	 * Runs on content preparation.
+	 * Called after the data for a JForm has been retrieved.
 	 *
 	 * @param	string	$context	The context for the data
 	 * @param	object	$data		An object containing the data for the form.
 	 *
 	 * @return boolean
-	 * @TODO FINISH THIS METHOD
 	 */
 	public function onContentPrepareData($context, $data)
 	{
@@ -211,7 +213,7 @@ class plgContentKSExtras extends JPlugin
 				JForm::addFormPath(dirname(__FILE__).'/extras');
 				$form = new JForm('com_content.article');
 				$form->loadFile('testimonial', false);
-// Need to test this piece
+
 				// Merge the default values
 				$data->attribs = array();
 				foreach ($form->getFieldset('attribs') as $field)
@@ -287,7 +289,7 @@ class plgContentKSExtras extends JPlugin
 	public function onContentAfterDelete($context, $data)
 	{
 		 // get the article id
-		$articleId = isset($data->id) ? $data->id : 0;
+		$articleId = isset($data->id) ? (int) $data->id : 0;
 		
 		if ($articleId)
 		{
@@ -313,7 +315,7 @@ class plgContentKSExtras extends JPlugin
 	}
 	
 	/**
-	 * Prepare the content for output
+	 * The first stage in preparing the content for output
 	 *
 	 * @param $context
 	 * @param $article
@@ -409,7 +411,7 @@ class plgContentKSExtras extends JPlugin
 
 	/**
 	* Update record function
-	 *
+	*
 	* @param $attribs requires object of attributes from form
 	* @param $articleId id of the article we are relating to
 	*
