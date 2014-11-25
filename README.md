@@ -16,6 +16,7 @@ This plugin is still under development and testing...
 
 
 Sample layout override output for a testimonial:
+````
 <pre>
 <div itemtype="http://schema.org/Review" itemscope="">
 <div class="schema-review-description" itemprop="description">Review of {organization}</div>
@@ -36,3 +37,4 @@ Sample layout override output for a testimonial:
 </div>
 </div>
 </pre>
+````
