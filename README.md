@@ -15,7 +15,7 @@ This plugin is still under development and testing...
 3. In language/en-GB/en-GB.plg_content_ksextras.ini add the language strings
 
 
-Sample layout override output for a testimonial:
+Sample layout override output for a testimonial (replace the items in the curly brackets with the appropriate variables):
 ````
 <pre>
 <div itemtype="http://schema.org/Review" itemscope="">
