@@ -468,10 +468,12 @@ class plgContentKSExtras extends JPlugin
 			return true;
 		}
 		
+		// Need to check if the current category's parent or grand-parent 
+		// is the category selected for this plugin
 		if ($this->include_child_categories)
 		{
-			$children = $this->getChildCategories($article_cat);
-			if (in_array($article_cat, $children))
+			$parents = $this->getParentCategories($article_cat);
+			if (in_array($this->category, $parents))
 			{
 				return true;
 			}
@@ -492,9 +494,9 @@ class plgContentKSExtras extends JPlugin
 		jimport('joomla.application.categories');
 		$categories = JCategories::getInstance('Content');
 		$cat		= $categories->get($catId);
-		$children	= $cat->getChildren(false);
+		$children	= $cat->getChildren();
 		$childCats	= array();
-		
+
 		foreach ($children as $child)
 		{
 			$childCats[] = $child->id;
@@ -502,4 +504,35 @@ class plgContentKSExtras extends JPlugin
 
 		return $childCats;
 	}
+
+	/**
+	 * Get a list of the category parent(s)
+	 *
+	 * @param integer	$catId	The id of the category to check
+	 *
+	 * @return array
+	 */
+	protected function getParentCategories($catId)
+	{
+		$parentCats	= array();
+
+		jimport('joomla.application.categories');
+		$categories = JCategories::getInstance('Content');
+		$cat		= $categories->get($catId);
+
+		// Check the parent_id. If it is an integer > 0, update the array and 
+		// check for a parent_id of the parent... Only going up 2 levels...
+		if ((int)$cat->parent_id)
+		{
+			$parentCats[]	= $cat->parent_id;
+			$parent 		= $cat->getParent();
+			if ((int) $parent->parent_id)
+			{
+				$parentCats[] = $parent->parent_id;
+			}
+		}
+
+		return $parentCats;
+	}
+
 }
