@@ -77,6 +77,15 @@
 				message="PLG_CONTENT_KSEXTRAS_FIELD_AUTHOR_POSTAL_CODE_MESSAGE"
 				size="30"
 			/>
+			<field
+				name="author_url"
+				type="url"
+				id="author_url"
+				description="PLG_CONTENT_KSEXTRAS_FIELD_AUTHOR_URL_DESC"
+				label="PLG_CONTENT_KSEXTRAS_FIELD_AUTHOR_URL_LABEL"
+				message="PLG_CONTENT_KSEXTRAS_FIELD_AUTHOR_URL_MESSAGE"
+				size="30"
+			/>
 		</fieldset>
 	</fields>
 </form>

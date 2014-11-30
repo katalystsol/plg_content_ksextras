@@ -78,6 +78,7 @@ class plgContentKSExtras extends JPlugin
 			'author_locality',
 			'author_region',
 			'author_postal_code',
+			'author_url',
 		);
 		
 		return $ksfields;
